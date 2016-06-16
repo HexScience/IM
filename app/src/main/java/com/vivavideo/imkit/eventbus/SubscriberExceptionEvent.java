@@ -15,11 +15,10 @@
  */
 package com.vivavideo.imkit.eventbus;
 
-import com.vivavideo.imkit.eventbus.EventBus;
-
 /**
- * This Event is posted by EventBus when an exception occurs inside a subscriber's event handling method.
- * 
+ * This Event is posted by EventBus when an exception occurs inside a subscriber's event handling
+ * method.
+ *
  * @author Markus
  */
 public final class SubscriberExceptionEvent {

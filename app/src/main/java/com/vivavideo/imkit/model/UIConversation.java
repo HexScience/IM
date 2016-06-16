@@ -364,24 +364,6 @@ public class UIConversation implements Parcelable {
             builder.append(targetName == null ? uiConversation.getConversationTargetId() : targetName)
                     .append(" : ")
                     .append(messageData);
-        } else if (Conversation.ConversationType.GROUP.getName().equals(type)) {
-            String senderName;
-            GroupUserInfo info = RongUserInfoManager.getInstance().getGroupUserInfo(uiConversation.targetId, senderId);
-            if (info != null) {
-                senderName = info.getNickname();
-            } else {
-                UserInfo userInfo = uiConversation.getMessageContent().getUserInfo();
-                if (userInfo == null || userInfo.getName() == null) {
-                    senderName = RongContext.getInstance()
-                            .getConversationTemplate(Conversation.ConversationType.PRIVATE.getName())
-                            .getTitle(senderId);
-                } else {
-                    senderName = userInfo.getName();
-                }
-            }
-            builder.append(senderName == null ? (senderId == null ? "" : senderId) : senderName)
-                    .append(" : ")
-                    .append(messageData);
         } else if (Conversation.ConversationType.DISCUSSION.getName().equals(type)) {
             String senderName = RongContext.getInstance()
                     .getConversationTemplate(Conversation.ConversationType.PRIVATE.getName())

@@ -15,8 +15,6 @@
  */
 package com.vivavideo.imkit.eventbus;
 
-import com.vivavideo.imkit.Subscription;
-
 import java.util.ArrayList;
 import java.util.List;
 

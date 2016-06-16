@@ -1,7 +1,5 @@
 package com.vivavideo.imkit.userInfoCache;
 
-import com.vivavideo.imkit.model.GroupUserInfo;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -107,76 +105,6 @@ class RongDatabaseDao {
         }
 
         db.execSQL("replace into users (id, name, portrait) values (?, ?, ?)", new String[]{userInfo.getUserId(), userInfo.getName(), userInfo.getPortraitUri() + ""});
-    }
-
-    GroupUserInfo getGroupUserInfo(final String groupId, final String userId) {
-        if (userId == null || groupId == null) {
-            RLog.w(TAG, "getGroupUserInfo parameter is invalid");
-            return null;
-        }
-        if (db == null) {
-            RLog.w(TAG, "getGroupUserInfo db is invalid");
-            return null;
-        }
-
-        Cursor c = db.query(groupUsersTable, null, "group_id = ? and user_id = ?", new String[]{groupId, userId}, null, null, null);
-        GroupUserInfo info = null;
-        if (c.moveToFirst()) {
-            String gId = c.getString(c.getColumnIndex("group_id"));
-            String uId = c.getString(c.getColumnIndex("user_id"));
-            String nickname = c.getString(c.getColumnIndex("nickname"));
-            info = new GroupUserInfo(gId, uId, nickname);
-        }
-        c.close();
-        return info;
-    }
-
-    synchronized void insertGroupUserInfo (GroupUserInfo userInfo) {
-        if (userInfo == null || userInfo.getGroupId() == null || userInfo.getUserId() == null) {
-            RLog.w(TAG, "insertGroupUserInfo parameter is invalid");
-            return;
-        }
-        if (db == null) {
-            RLog.w(TAG, "insertGroupUserInfo db is invalid");
-            return;
-        }
-
-        ContentValues cv = new ContentValues();
-        cv.put("group_id", userInfo.getGroupId());
-        cv.put("user_id", userInfo.getUserId());
-        cv.put("nickname", userInfo.getNickname());
-        db.insert(groupUsersTable, null, cv);
-    }
-
-    synchronized void updateGroupUserInfo (GroupUserInfo userInfo) {
-        if (userInfo == null || userInfo.getGroupId() == null || userInfo.getUserId() == null) {
-            RLog.w(TAG, "updateGroupUserInfo parameter is invalid");
-            return;
-        }
-        if (db == null) {
-            RLog.w(TAG, "updateGroupUserInfo db is invalid");
-            return;
-        }
-
-        ContentValues cv = new ContentValues();
-        cv.put("group_id", userInfo.getGroupId());
-        cv.put("user_id", userInfo.getUserId());
-        cv.put("nickname", userInfo.getNickname());
-        db.update(groupUsersTable, cv, "group_id=? and user_id=?", new String[]{userInfo.getGroupId(), userInfo.getUserId()});
-    }
-
-    synchronized void putGroupUserInfo (GroupUserInfo userInfo) {
-        if (userInfo == null || userInfo.getGroupId() == null || userInfo.getUserId() == null) {
-            RLog.w(TAG, "putGroupUserInfo parameter is invalid");
-            return;
-        }
-        if (db == null) {
-            RLog.w(TAG, "putGroupUserInfo db is invalid");
-            return;
-        }
-
-        db.execSQL("delete from group_users where group_id=? and user_id=?", new String[]{userInfo.getGroupId(), userInfo.getUserId()});
-        db.execSQL("insert into group_users (group_id, user_id, nickname) values (?, ?, ?)", new String[]{userInfo.getGroupId(), userInfo.getUserId(), userInfo.getNickname()});
     }
 
     Group getGroupInfo(final String groupId) {

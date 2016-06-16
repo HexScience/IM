@@ -2,7 +2,6 @@ package com.vivavideo.imkit.userInfoCache;
 
 import com.vivavideo.imkit.RongIM;
 import com.vivavideo.imkit.common.RongConst;
-import com.vivavideo.imkit.model.GroupUserInfo;
 import com.vivavideo.imkit.utils.StringUtils;
 
 import android.content.Context;
@@ -21,7 +20,6 @@ import io.rong.imlib.model.UserInfo;
 public class RongUserInfoManager {
     private static RongDatabaseDao mRongDatabaseDao;
     private RongUserCache<String, UserInfo> mUserInfoCache;
-    private RongUserCache<String, GroupUserInfo> mGroupUserInfoCache;
     private RongUserCache<String, RongConversationInfo> mGroupCache;
     private RongUserCache<String, RongConversationInfo> mDiscussionCache;
     private RongUserCache<String, PublicServiceProfile> mPublicServiceProfileCache;
@@ -43,7 +41,6 @@ public class RongUserInfoManager {
 
     private RongUserInfoManager() {
         mUserInfoCache = new RongUserCache<>(RongConst.Cache.USER_CACHE_MAX_COUNT);
-        mGroupUserInfoCache = new RongUserCache<>(RongConst.Cache.USER_CACHE_MAX_COUNT);
         mGroupCache = new RongUserCache<>(RongConst.Cache.GROUP_CACHE_MAX_COUNT);
         mDiscussionCache = new RongUserCache<>(RongConst.Cache.DISCUSSION_CACHE_MAX_COUNT);
         mPublicServiceProfileCache = new RongUserCache<>(RongConst.Cache.PUBLIC_ACCOUNT_CACHE_MAX_COUNT);
@@ -148,103 +145,6 @@ public class RongUserInfoManager {
             });
         }
         return info;
-    }
-
-    public GroupUserInfo getGroupUserInfo(final String gId, final String id) {
-        if (gId == null || id == null) {
-            return null;
-        }
-        final String key = StringUtils.getKey(gId, id);
-        GroupUserInfo info = null;
-        if (mIsCacheGroupUserInfo) {
-            info = mGroupUserInfoCache.get(key);
-        }
-        if (info == null) {
-            mWorkHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    synchronized (mGroupUserQuerySet) {
-                        if (mGroupUserQuerySet.contains(key)) {
-                            return;
-                        }
-                        mGroupUserQuerySet.add(key);
-                    }
-                    GroupUserInfo groupUserInfo = null;
-                    if (mRongDatabaseDao != null) {
-                        groupUserInfo = mRongDatabaseDao.getGroupUserInfo(gId, id);
-                    }
-                    if (groupUserInfo == null) {
-                        if (mCacheListener != null) {
-                            groupUserInfo = mCacheListener.getGroupUserInfo(gId, id);
-                        }
-                        if (groupUserInfo != null && mRongDatabaseDao != null) {
-                            mRongDatabaseDao.insertGroupUserInfo(groupUserInfo);
-                        }
-                    }
-                    if (groupUserInfo != null) {
-                        if (mIsCacheGroupUserInfo) {
-                            mGroupUserInfoCache.put(key, groupUserInfo);
-                        }
-                        if (mCacheListener != null) {
-                            mCacheListener.onGroupUserInfoUpdated(groupUserInfo);
-                        }
-                    }
-                    mGroupUserQuerySet.remove(key);
-                }
-            });
-        }
-        return info;
-    }
-
-    public Group getGroupInfo(final String id) {
-        if (id == null) {
-            return null;
-        }
-        Group groupInfo = null;
-        RongConversationInfo info = null;
-        if (mIsCacheGroupInfo) {
-            info = mGroupCache.get(id);
-        }
-        if (info == null) {
-            mWorkHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    synchronized (mGroupQuerySet) {
-                        if (mGroupQuerySet.contains(id)) {
-                            return;
-                        }
-                        mGroupQuerySet.add(id);
-                    }
-                    Group group = null;
-
-                    if (mRongDatabaseDao != null) {
-                        group = mRongDatabaseDao.getGroupInfo(id);
-                    }
-                    if (group == null) {
-                        if (mCacheListener != null) {
-                            group = mCacheListener.getGroupInfo(id);
-                        }
-                        if (group != null && mRongDatabaseDao != null) {
-                            mRongDatabaseDao.insertGroupInfo(group);
-
-                        }
-                    }
-                    if (group != null) {
-                        if (mIsCacheGroupInfo) {
-                            RongConversationInfo conversationInfo = new RongConversationInfo(Conversation.ConversationType.GROUP.getValue()+"", group.getId(), group.getName(), group.getPortraitUri());
-                            mGroupCache.put(id, conversationInfo);
-                        }
-                        if (mCacheListener != null) {
-                            mCacheListener.onGroupUpdated(group);
-                        }
-                    }
-                    mGroupQuerySet.remove(id);
-                }
-            });
-        } else {
-            groupInfo = new Group(info.getId(), info.getName(), info.getUri());
-        }
-        return groupInfo;
     }
 
     public Discussion getDiscussionInfo(final String id) {
@@ -369,46 +269,6 @@ public class RongUserInfoManager {
                         putUserInfoInDB(info);
                         if (mCacheListener != null) {
                             mCacheListener.onUserInfoUpdated(info);
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    public void setGroupUserInfo(final GroupUserInfo info) {
-        String key = StringUtils.getKey(info.getGroupId(), info.getUserId());
-        if (mIsCacheGroupUserInfo) {
-            final GroupUserInfo oldInfo = mGroupUserInfoCache.put(key, info);
-            if ((oldInfo == null)
-                    || (oldInfo.getNickname() != null && info.getNickname() != null && !oldInfo.getNickname().equals(info.getNickname()))) {
-                mWorkHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mRongDatabaseDao != null) {
-                            mRongDatabaseDao.putGroupUserInfo(info);
-                        }
-                        if (mCacheListener != null) {
-                            mCacheListener.onGroupUserInfoUpdated(info);
-                        }
-                    }
-                });
-            }
-        } else {
-            mWorkHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    GroupUserInfo oldInfo = null;
-                    if (mRongDatabaseDao != null) {
-                        oldInfo = mRongDatabaseDao.getGroupUserInfo(info.getGroupId(), info.getUserId());
-                    }
-                    if ((oldInfo == null)
-                            || (oldInfo.getNickname() != null && info.getNickname() != null && !oldInfo.getNickname().equals(info.getNickname()))) {
-                        if (mRongDatabaseDao != null) {
-                            mRongDatabaseDao.putGroupUserInfo(info);
-                        }
-                        if (mCacheListener != null) {
-                            mCacheListener.onGroupUserInfoUpdated(info);
                         }
                     }
                 }

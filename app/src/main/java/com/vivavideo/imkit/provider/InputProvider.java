@@ -1,9 +1,9 @@
 package com.vivavideo.imkit.provider;
 
-import com.vivavideo.imkit.widget.InputView;
 import com.vivavideo.imkit.RongContext;
 import com.vivavideo.imkit.RongIM;
 import com.vivavideo.imkit.fragment.MessageInputFragment;
+import com.vivavideo.imkit.widget.InputView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -47,7 +47,7 @@ public abstract class InputProvider {
     /**
      * 获取当前融云IM上线文。
      *
-     * @return  融云IM上下文。
+     * @return 融云IM上下文。
      */
     public RongContext getContext() {
         return mContext;
@@ -56,7 +56,7 @@ public abstract class InputProvider {
     /**
      * 实例化方法。
      *
-     * @param context   融云IM上下文。（通过 RongContext.getInstance() 可以获取）
+     * @param context 融云IM上下文。（通过 RongContext.getInstance() 可以获取）
      */
     public InputProvider(RongContext context) {
         mContext = context;
@@ -66,7 +66,7 @@ public abstract class InputProvider {
     /**
      * 设置当前活动会话。
      *
-     * @param conversation  会话实例。
+     * @param conversation 会话实例。
      */
     public void setCurrentConversation(Conversation conversation) {
         mCurrentConversation = conversation;
@@ -75,7 +75,7 @@ public abstract class InputProvider {
     /**
      * 获取当前会话实例。
      *
-     * @return  会话实例。
+     * @return 会话实例。
      */
     public Conversation getCurrentConversation() {
         return mCurrentConversation;
@@ -90,10 +90,10 @@ public abstract class InputProvider {
      * @param requestCode The integer request code originally supplied to
      *                    startActivityForResult(), allowing you to identify who this
      *                    result came from.
-     * @param resultCode The integer result code returned by the child activity
-     *                   through its setResult().
-     * @param data An Intent, which can return result data to the caller
-     *               (various data can be attached to Intent "extras").
+     * @param resultCode  The integer result code returned by the child activity
+     *                    through its setResult().
+     * @param data        An Intent, which can return result data to the caller
+     *                    (various data can be attached to Intent "extras").
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -113,7 +113,7 @@ public abstract class InputProvider {
     /**
      * 获取所属Fragment。
      *
-     * @return  当前所属Fragment。
+     * @return 当前所属Fragment。
      */
     public MessageInputFragment getCurrentFragment() {
         return mFragment;
@@ -132,10 +132,10 @@ public abstract class InputProvider {
     /**
      * 发送消息内容实例。
      *
-     * @param content   消息内容实例。
-     * @param callback  发送消息回调。
+     * @param content  消息内容实例。
+     * @param callback 发送消息回调。
      */
-    public void publish(MessageContent content, final RongIMClient.ResultCallback<Message> callback){
+    public void publish(MessageContent content, final RongIMClient.ResultCallback<Message> callback) {
         if (content == null) {
             RLog.w(TAG, "publish content is null");
             return;
@@ -150,24 +150,26 @@ public abstract class InputProvider {
         RongIM.getInstance().sendMessage(message, null, null, new IRongCallback.ISendMessageCallback() {
             @Override
             public void onAttached(Message message) {
-
+                if (callback != null)
+                    callback.onCallback(message);
             }
 
             @Override
             public void onSuccess(Message message) {
-
+                if (callback != null)
+                    callback.onSuccess(message);
             }
 
             @Override
             public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
+                if (callback != null)
+                    callback.onError(errorCode);
             }
         });
     }
 
     /**
      * 发送输入状态消息。
-     *
      */
     public void onTypingMessage(String objectName) {
         boolean isShow = RongIMClient.getInstance().getTypingStatus();
@@ -182,8 +184,8 @@ public abstract class InputProvider {
     /**
      * 在依附上页面其他控件时候调用。
      *
-     * @param fragment      依附上的 Fragment。
-     * @param inputView     依附上的 InputView。
+     * @param fragment  依附上的 Fragment。
+     * @param inputView 依附上的 InputView。
      */
     public void onAttached(MessageInputFragment fragment, InputView inputView) {
         mFragment = fragment;
@@ -192,7 +194,6 @@ public abstract class InputProvider {
 
     /**
      * 脱离依附时调用。
-     *
      */
     public void onDetached() {
         mFragment = null;
@@ -202,7 +203,7 @@ public abstract class InputProvider {
     /**
      * 获取依附的 InputView 。
      *
-     * @return  依附的 InputView 。
+     * @return 依附的 InputView 。
      */
     public InputView getInputView() {
         return mCurrentView;
@@ -216,7 +217,7 @@ public abstract class InputProvider {
         /**
          * 实例化适配器。
          *
-         * @param context   融云IM上下文。（通过 RongContext.getInstance() 可以获取）
+         * @param context 融云IM上下文。（通过 RongContext.getInstance() 可以获取）
          */
         public MainInputProvider(RongContext context) {
             super(context);
@@ -225,8 +226,8 @@ public abstract class InputProvider {
         /**
          * 生成切换是需要的图标。
          *
-         * @param context   页面上下文。
-         * @return  切换时候的图标。
+         * @param context 页面上下文。
+         * @return 切换时候的图标。
          */
         public abstract Drawable obtainSwitchDrawable(Context context);
 
@@ -237,28 +238,26 @@ public abstract class InputProvider {
          * @param inflater  生成View所需 LayoutInflater 。
          * @param parent    生成页面父容器。
          * @param inputView 所属 InputView 。
-         * @return  主输入区 View。
+         * @return 主输入区 View。
          */
         public abstract View onCreateView(LayoutInflater inflater, ViewGroup parent, InputView inputView);
 
         /**
          * 激活时调用。
          *
-         * @param context   页面上下文。
+         * @param context 页面上下文。
          */
         public abstract void onActive(Context context);
 
         /**
          * 在失去激活时调用。
          *
-         * @param context   页面上下文。
+         * @param context 页面上下文。
          */
         public abstract void onInactive(Context context);
 
         /**
-         *
-         *
-         * @param context   页面上下文。
+         * @param context 页面上下文。
          */
         public abstract void onSwitch(Context context);
     }
@@ -266,35 +265,37 @@ public abstract class InputProvider {
     /**
      * 会话扩展区适配器。
      */
-    public static abstract class ExtendProvider extends InputProvider{
+    public static abstract class ExtendProvider extends InputProvider {
 
         /**
          * 实例化适配器。
          *
-         * @param context   融云IM上下文。（通过 RongContext.getInstance() 可以获取）
+         * @param context 融云IM上下文。（通过 RongContext.getInstance() 可以获取）
          */
-        public ExtendProvider(RongContext context){super(context);}
+        public ExtendProvider(RongContext context) {
+            super(context);
+        }
 
         /**
          * 生成扩展区图片。
          *
-         * @param context   页面上下文。
-         * @return  扩展区图片。
+         * @param context 页面上下文。
+         * @return 扩展区图片。
          */
         public abstract Drawable obtainPluginDrawable(Context context);
 
         /**
          * 生成扩展区标题。
          *
-         * @param context   页面上下文。
-         * @return  扩展区标题。
+         * @param context 页面上下文。
+         * @return 扩展区标题。
          */
         public abstract CharSequence obtainPluginTitle(Context context);
 
         /**
          * 扩展区点击时候触发。
          *
-         * @param view  点击发生的View。
+         * @param view 点击发生的View。
          */
         public abstract void onPluginClick(View view);
 

@@ -23,7 +23,6 @@ import java.lang.reflect.Type;
  */
 public class GsonParser<T extends Serializable> extends JsonObjectParser<T> {
 
-
     Type type;
     Gson gson;
 

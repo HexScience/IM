@@ -757,20 +757,6 @@ public class Event {
 
     }
 
-    public static class GroupUserInfoEvent {
-        private GroupUserInfo userInfo;
-
-        public static GroupUserInfoEvent obtain(GroupUserInfo info) {
-            GroupUserInfoEvent event = new GroupUserInfoEvent();
-            event.userInfo = info;
-            return event;
-        }
-
-        public GroupUserInfo getUserInfo() {
-            return userInfo;
-        }
-    }
-
     public static class PlayAudioEvent {
         private boolean isListened;
         private boolean finished;

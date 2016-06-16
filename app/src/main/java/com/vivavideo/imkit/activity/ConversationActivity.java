@@ -12,7 +12,6 @@ import com.vivavideo.imkit.RongIM;
 import com.vivavideo.imkit.database.UserInfos;
 import com.vivavideo.imkit.fragment.ConversationFragment;
 import com.vivavideo.imkit.fragment.UriFragment;
-import com.vivavideo.imkit.model.Groups;
 import com.vivavideo.imkit.model.RongEvent;
 import com.vivavideo.imkit.provider.InputProvider;
 import com.vivavideo.imkit.provider.TextInputProvider;
@@ -91,7 +90,6 @@ public class ConversationActivity extends BaseApiActivity implements RongIMClien
 
     private RelativeLayout mRealTimeBar;//real-time bar
     private RealTimeLocationConstant.RealTimeLocationStatus currentLocationStatus;
-    private AbstractHttpRequest<Groups> mGetMyGroupsRequest;
     private LoadingDialog mDialog;
 
     private final String TextTypingTitle = "对方正在输入...";
@@ -332,8 +330,6 @@ public class ConversationActivity extends BaseApiActivity implements RongIMClien
             public void onSuccess(String s) {
                 Log.i(TAG, "---onSuccess--" + s);
 
-                mGetMyGroupsRequest = DemoContext.getInstance().getDemoApi().getMyGroups(ConversationActivity.this);
-
                 enterFragment(mConversationType, mTargetId);
             }
 
@@ -533,10 +529,6 @@ public class ConversationActivity extends BaseApiActivity implements RongIMClien
 
     @Override
     public void onCallApiSuccess(AbstractHttpRequest request, Object obj) {
-        if (mGetMyGroupsRequest != null && mGetMyGroupsRequest.equals(request)) {
-            Log.e(TAG, "---push--onCallApiSuccess-");
-//            getMyGroupApiSuccess(obj);
-        }
     }
 
 //    /**

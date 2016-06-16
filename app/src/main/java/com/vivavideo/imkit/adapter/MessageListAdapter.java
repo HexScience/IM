@@ -6,7 +6,6 @@ import com.vivavideo.imkit.R;
 import com.vivavideo.imkit.RongContext;
 import com.vivavideo.imkit.model.ConversationKey;
 import com.vivavideo.imkit.model.Event;
-import com.vivavideo.imkit.model.GroupUserInfo;
 import com.vivavideo.imkit.model.ProviderTag;
 import com.vivavideo.imkit.model.UIMessage;
 import com.vivavideo.imkit.provider.IContainerItemProvider;
@@ -329,17 +328,6 @@ public class MessageListAdapter extends BaseAdapter<UIMessage> {
                         && data.getUserInfo() != null && data.getMessageDirection().equals(Message.MessageDirection.RECEIVE)) {
                     userInfo = data.getUserInfo();
                     holder.nameView.setText(userInfo.getName());
-                } else if (data.getConversationType() == Conversation.ConversationType.GROUP) {
-                    GroupUserInfo groupUserInfo = RongUserInfoManager.getInstance().getGroupUserInfo(data.getTargetId(), data.getSenderUserId());
-                    if (groupUserInfo != null) {
-                        holder.nameView.setText(groupUserInfo.getNickname());
-                    } else {
-                        userInfo = RongUserInfoManager.getInstance().getUserInfo(data.getSenderUserId());
-                        if (userInfo == null)
-                            holder.nameView.setText(data.getSenderUserId());
-                        else
-                            holder.nameView.setText(userInfo.getName());
-                    }
                 } else {
                     userInfo = RongUserInfoManager.getInstance().getUserInfo(data.getSenderUserId());
                     if (userInfo == null)

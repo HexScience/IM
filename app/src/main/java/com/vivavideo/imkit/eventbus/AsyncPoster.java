@@ -16,13 +16,9 @@
 package com.vivavideo.imkit.eventbus;
 
 
-import com.vivavideo.imkit.PendingPost;
-import com.vivavideo.imkit.PendingPostQueue;
-import com.vivavideo.imkit.Subscription;
-
 /**
  * Posts events in background.
- * 
+ *
  * @author Markus
  */
 class AsyncPoster implements Runnable {
@@ -44,7 +40,7 @@ class AsyncPoster implements Runnable {
     @Override
     public void run() {
         PendingPost pendingPost = queue.poll();
-        if(pendingPost == null) {
+        if (pendingPost == null) {
             throw new IllegalStateException("No pending post available");
         }
         eventBus.invokeSubscriber(pendingPost);

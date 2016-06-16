@@ -84,32 +84,6 @@ public class RongNotificationManager {
             } else {
                 messageMap.put(targetKey.getKey(), message);
             }
-        } else if (type.equals(Conversation.ConversationType.GROUP)) {
-            Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(message.getTargetId());
-            UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId());
-            if (groupInfo != null) {
-                targetName = groupInfo.getName();
-            }
-            if (userInfo != null) {
-                userName = userInfo.getName();
-            }
-            if (!TextUtils.isEmpty(targetName) && !TextUtils.isEmpty(userName)) {
-                String notificationContent = userName + " : " + content.toString();
-                pushMsg = new PushNotificationMessage();
-                pushMsg.setPushContent(notificationContent);
-                pushMsg.setConversationType(RongPushClient.ConversationType.setValue(message.getConversationType().getValue()));
-                pushMsg.setTargetId(message.getTargetId());
-                pushMsg.setTargetUserName(targetName);
-                pushMsg.setObjectName(message.getObjectName());
-                RongNotificationInterface.sendNotification(mContext, pushMsg);
-            } else {
-                if (TextUtils.isEmpty(targetName))
-                    messageMap.put(targetKey.getKey(), message);
-                if (TextUtils.isEmpty(userName)) {
-                    ConversationKey senderKey = ConversationKey.obtain(message.getSenderUserId(), type);
-                    messageMap.put(senderKey.getKey(), message);
-                }
-            }
         } else if (type.equals(Conversation.ConversationType.DISCUSSION)) {
             Discussion discussionInfo = RongUserInfoManager.getInstance().getDiscussionInfo(message.getTargetId());
             UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId());
@@ -182,13 +156,7 @@ public class RongNotificationManager {
 
                 messageMap.remove(key);
 
-                if (type.equals(Conversation.ConversationType.GROUP)) {
-                    Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(message.getTargetId());
-                    if (groupInfo != null) {
-                        targetName = groupInfo.getName();
-                    }
-                    notificationContent = userInfo.getName() + " : " + content.toString();
-                } else if (type.equals(Conversation.ConversationType.DISCUSSION)) {
+                if (type.equals(Conversation.ConversationType.DISCUSSION)) {
                     Discussion discussion = RongUserInfoManager.getInstance().getDiscussionInfo(message.getTargetId());
                     if (discussion != null) {
                         targetName = discussion.getName();
@@ -233,7 +201,7 @@ public class RongNotificationManager {
             }
 
             pushMsg = new PushNotificationMessage();
-            pushMsg.setPushContent( userName + " : " + content.toString());
+            pushMsg.setPushContent(userName + " : " + content.toString());
             pushMsg.setConversationType(RongPushClient.ConversationType.setValue(message.getConversationType().getValue()));
             pushMsg.setTargetId(message.getTargetId());
             pushMsg.setTargetUserName(groupInfo.getName());

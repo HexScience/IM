@@ -7,7 +7,6 @@ import com.vivavideo.imkit.R;
 import com.vivavideo.imkit.RongIM;
 import com.vivavideo.imkit.database.UserInfos;
 import com.vivavideo.imkit.model.Friends;
-import com.vivavideo.imkit.model.Groups;
 import com.vivavideo.imkit.model.User;
 import com.vivavideo.imkit.utils.Constants;
 import com.vivavideo.imkit.widget.EditTextHolder;
@@ -51,7 +50,6 @@ public class LoginActivity extends BaseApiActivity implements View.OnClickListen
 
     private AbstractHttpRequest<User> loginHttpRequest;
     private AbstractHttpRequest<Friends> getUserInfoHttpRequest;
-    private AbstractHttpRequest<Groups> mGetMyGroupsRequest;
     private LoadingDialog mDialog;
     private Handler mHandler;
 
@@ -250,8 +248,6 @@ public class LoginActivity extends BaseApiActivity implements View.OnClickListen
             loginApiSuccess(obj);
         } else if (getUserInfoHttpRequest != null && getUserInfoHttpRequest.equals(request)) {
             getFriendsApiSuccess(obj);
-        } else if (mGetMyGroupsRequest != null && mGetMyGroupsRequest.equals(request)) {
-            getMyGroupApiSuccess(obj);
         }
     }
 
@@ -261,8 +257,6 @@ public class LoginActivity extends BaseApiActivity implements View.OnClickListen
         if (loginHttpRequest != null && loginHttpRequest.equals(request)) {
             if (mDialog != null)
                 mDialog.dismiss();
-        } else if (mGetMyGroupsRequest != null && mGetMyGroupsRequest.equals(request)) {
-            Log.e(TAG, "-------getGroupInfo failure----");
         }
     }
 
@@ -350,7 +344,6 @@ public class LoginActivity extends BaseApiActivity implements View.OnClickListen
 
 
                             //请求 demo server 获得自己所加入得群组。
-                            mGetMyGroupsRequest = DemoContext.getInstance().getDemoApi().getMyGroups(LoginActivity.this);
                         }
 
                         @Override
@@ -362,66 +355,6 @@ public class LoginActivity extends BaseApiActivity implements View.OnClickListen
             );
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * 获得自己所加入得群组成功以后，调用 syncGroup 方法，同步自己所加入得群组
-     *
-     * @param obj
-     */
-    private void getMyGroupApiSuccess(Object obj) {
-        if (obj instanceof Groups) {
-            final Groups groups = (Groups) obj;
-            if (groups.getCode() == 200) {
-                List<Group> grouplist = new ArrayList<Group>();
-                if (groups.getResult() != null) {
-                    for (int i = 0; i < groups.getResult().size(); i++) {
-                        String id = groups.getResult().get(i).getId();
-                        String name = groups.getResult().get(i).getName();
-                        if (groups.getResult().get(i).getPortrait() != null) {
-                            Uri uri = Uri.parse(groups.getResult().get(i).getPortrait());
-                            grouplist.add(new Group(id, name, uri));
-                        } else {
-                            grouplist.add(new Group(id, name, null));
-                        }
-                    }
-
-                    HashMap<String, Group> groupM = new HashMap<String, Group>();
-
-                    for (int i = 0; i < grouplist.size(); i++) {
-                        groupM.put(groups.getResult().get(i).getId(), grouplist.get(i));
-                        Log.i(TAG, "----get MyGroup id----" + groups.getResult().get(i).getId());
-                    }
-
-                    if (DemoContext.getInstance() != null)
-                        DemoContext.getInstance().setGroupMap(groupM);
-
-                    mHandler.obtainMessage(HANDLER_LOGIN_SUCCESS).sendToTarget();
-
-                    final long time1 = System.currentTimeMillis();
-                    RongIM.getInstance().syncGroup(grouplist, new RongIMClient.OperationCallback() {
-
-                        @Override
-                        public void onSuccess() {
-                            Log.i(TAG, "---syncGroup-onSuccess---");
-
-                            long time2 = System.currentTimeMillis() - time1;
-
-                            Log.e(TAG, "-----syncGroup-onSuccess-" + time2);
-
-                        }
-
-                        @Override
-                        public void onError(RongIMClient.ErrorCode errorCode) {
-                            Log.e(TAG, "---syncGroup-onError---" + errorCode);
-                            long time2 = System.currentTimeMillis() - time1;
-
-                            Log.e(TAG, "-----syncGroup-onError-" + time2);
-                        }
-                    });
-                }
-            }
         }
     }
 
@@ -576,10 +509,9 @@ public class LoginActivity extends BaseApiActivity implements View.OnClickListen
 //            bitmap.recycle();
 //        }
 
-        if (loginHttpRequest != null || getUserInfoHttpRequest != null || mGetMyGroupsRequest != null) {
+        if (loginHttpRequest != null || getUserInfoHttpRequest != null ) {
             loginHttpRequest = null;
             getUserInfoHttpRequest = null;
-            mGetMyGroupsRequest = null;
             Log.e(TAG, "------OnDestory--loginHttpRequest-");
         }
     }

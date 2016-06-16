@@ -9,7 +9,6 @@ import com.sea_monster.network.BaseApi;
 import com.sea_monster.network.NetworkManager;
 import com.vivavideo.imkit.database.UserInfos;
 import com.vivavideo.imkit.model.Friends;
-import com.vivavideo.imkit.model.Groups;
 import com.vivavideo.imkit.model.Status;
 import com.vivavideo.imkit.model.User;
 import com.vivavideo.imkit.parser.GsonParser;
@@ -241,57 +240,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     }
 
-
-    /**
-     * demo server 获取所有群组列表
-     *
-     * @param callback
-     * @return
-     */
-    public AbstractHttpRequest<Groups> getAllGroups(ApiCallback<Groups> callback) {
-
-        ApiReqeust<Groups> apiReqeust = new DefaultApiReqeust<Groups>(ApiReqeust.GET_METHOD, URI.create(HOST + DEMO_GET_ALL_GROUP), callback);
-        AbstractHttpRequest<Groups> httpRequest = apiReqeust.obtainRequest(new GsonParser<Groups>(Groups.class), mAuthType);
-        NetworkManager.getInstance().requestAsync(httpRequest);
-
-        return httpRequest;
-
-    }
-
-    /**
-     * demo server 获取我的群组列表
-     *
-     * @param callback
-     * @return
-     */
-    public AbstractHttpRequest<Groups> getMyGroups(ApiCallback<Groups> callback) {
-
-        ApiReqeust<Groups> apiReqeust = new DefaultApiReqeust<Groups>(ApiReqeust.GET_METHOD, URI.create(HOST + DEMO_GET_MY_GROUP), callback);
-        AbstractHttpRequest<Groups> httpRequest = apiReqeust.obtainRequest(new GsonParser<Groups>(Groups.class), mAuthType);
-        NetworkManager.getInstance().requestAsync(httpRequest);
-
-        return httpRequest;
-
-    }
-
-    /**
-     * demo server 通过群组id 获取群组信息
-     *
-     * @param callback
-     * @return
-     */
-
-    public AbstractHttpRequest<Groups> getGroupByGroupId(String groupid, ApiCallback<Groups> callback) {
-
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("id", groupid));
-
-        ApiReqeust<Groups> apiReqeust = new DefaultApiReqeust<Groups>(ApiReqeust.GET_METHOD, URI.create(HOST + DEMO_GET_GROUP), nameValuePairs, callback);
-        AbstractHttpRequest<Groups> httpRequest = apiReqeust.obtainRequest(new GsonParser<Groups>(Groups.class), mAuthType);
-        NetworkManager.getInstance().requestAsync(httpRequest);
-
-        return httpRequest;
-    }
 
     /**
      * 通过用户名搜索用户

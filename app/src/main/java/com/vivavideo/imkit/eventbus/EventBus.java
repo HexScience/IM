@@ -15,12 +15,6 @@
  */
 package com.vivavideo.imkit.eventbus;
 
-import com.vivavideo.imkit.HandlerPoster;
-import com.vivavideo.imkit.PendingPost;
-import com.vivavideo.imkit.SubscriberMethod;
-import com.vivavideo.imkit.SubscriberMethodFinder;
-import com.vivavideo.imkit.Subscription;
-
 import android.os.Looper;
 import android.util.Log;
 
@@ -34,11 +28,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 
 /**
- * EventBus is a central publish/subscribe event system for Android. Events are posted ({@link #post(Object)}) to the
- * bus, which delivers it to subscribers that have a matching handler method for the event type. To receive events,
- * subscribers must register themselves to the bus using {@link #register(Object)}. Once registered,
- * subscribers receive events until {@link #unregister(Object)} is called. By convention, event handling methods must
- * be named "onEvent", be public, return nothing (void), and have exactly one parameter (the event).
+ * EventBus is a central publish/subscribe event system for Android. Events are posted ({@link
+ * #post(Object)}) to the
+ * bus, which delivers it to subscribers that have a matching handler method for the event type. To
+ * receive events,
+ * subscribers must register themselves to the bus using {@link #register(Object)}. Once
+ * registered,
+ * subscribers receive events until {@link #unregister(Object)} is called. By convention, event
+ * handling methods must
+ * be named "onEvent", be public, return nothing (void), and have exactly one parameter (the
+ * event).
  *
  * @author Markus Junginger, greenrobot
  */
@@ -100,7 +99,8 @@ public class EventBus {
     }
 
     /**
-     * Creates a new EventBus instance; each instance is a separate scope in which events are delivered. To use a
+     * Creates a new EventBus instance; each instance is a separate scope in which events are
+     * delivered. To use a
      * central bus, consider {@link #getDefault()}.
      */
     public EventBus() {
@@ -126,13 +126,18 @@ public class EventBus {
 
 
     /**
-     * Registers the given subscriber to receive events. Subscribers must call {@link #unregister(Object)} once they
+     * Registers the given subscriber to receive events. Subscribers must call {@link
+     * #unregister(Object)} once they
      * are no longer interested in receiving events.
      * <p/>
-     * Subscribers have event handling methods that are identified by their name, typically called "onEvent". Event
-     * handling methods must have exactly one parameter, the event. If the event handling method is to be called in a
-     * specific thread, a modifier is appended to the method name. Valid modifiers match one of the {@link ThreadMode}
-     * enums. For example, if a method is to be called in the UI/main thread by EventBus, it would be called
+     * Subscribers have event handling methods that are identified by their name, typically called
+     * "onEvent". Event
+     * handling methods must have exactly one parameter, the event. If the event handling method is
+     * to be called in a
+     * specific thread, a modifier is appended to the method name. Valid modifiers match one of the
+     * {@link ThreadMode}
+     * enums. For example, if a method is to be called in the UI/main thread by EventBus, it would
+     * be called
      * "onEventMainThread".
      */
     public void register(Object subscriber) {
@@ -140,9 +145,13 @@ public class EventBus {
     }
 
     /**
-     * Like {@link #register(Object)} with an additional subscriber priority to influence the order of event delivery.
-     * Within the same delivery thread ({@link ThreadMode}), higher priority subscribers will receive events before
-     * others with a lower priority. The default priority is 0. Note: the priority does *NOT* affect the order of
+     * Like {@link #register(Object)} with an additional subscriber priority to influence the order
+     * of event delivery.
+     * Within the same delivery thread ({@link ThreadMode}), higher priority subscribers will
+     * receive events before
+     * others with a lower priority. The default priority is 0. Note: the priority does *NOT*
+     * affect
+     * the order of
      * delivery among subscribers with different {@link ThreadMode}s!
      */
     public void register(Object subscriber, int priority) {
@@ -150,7 +159,8 @@ public class EventBus {
     }
 
     /**
-     * Like {@link #register(Object)}, but also triggers delivery of the most recent sticky event (posted with
+     * Like {@link #register(Object)}, but also triggers delivery of the most recent sticky event
+     * (posted with
      * {@link #postSticky(Object)}) to the given subscriber.
      */
     public void registerSticky(Object subscriber) {
@@ -158,7 +168,8 @@ public class EventBus {
     }
 
     /**
-     * Like {@link #register(Object, int)}, but also triggers delivery of the most recent sticky event (posted with
+     * Like {@link #register(Object, int)}, but also triggers delivery of the most recent sticky
+     * event (posted with
      * {@link #postSticky(Object)}) to the given subscriber.
      */
     public void registerSticky(Object subscriber, int priority) {
@@ -222,7 +233,10 @@ public class EventBus {
         return typesBySubscriber.containsKey(subscriber);
     }
 
-    /** Only updates subscriptionsByEventType, not typesBySubscriber! Caller must update typesBySubscriber. */
+    /**
+     * Only updates subscriptionsByEventType, not typesBySubscriber! Caller must update
+     * typesBySubscriber.
+     */
     private void unubscribeByEventType(Object subscriber, Class<?> eventType) {
         List<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
         if (subscriptions != null) {
@@ -276,10 +290,13 @@ public class EventBus {
     }
 
     /**
-     * Called from a subscriber's event handling method, further event delivery will be canceled. Subsequent
+     * Called from a subscriber's event handling method, further event delivery will be canceled.
+     * Subsequent
      * subscribers
      * won't receive the event. Events are usually canceled by higher priority subscribers (see
-     * {@link #register(Object, int)}). Canceling is restricted to event handling methods running in posting thread
+     * {@link #register(Object, int)}). Canceling is restricted to event handling methods running
+     * in
+     * posting thread
      * {@link ThreadMode#PostThread}.
      */
     public void cancelEventDelivery(Object event) {
@@ -299,8 +316,10 @@ public class EventBus {
     }
 
     /**
-     * Posts the given event to the event bus and holds on to the event (because it is sticky). The most recent sticky
-     * event of an event's type is kept in memory for future access. This can be {@link #registerSticky(Object)} or
+     * Posts the given event to the event bus and holds on to the event (because it is sticky). The
+     * most recent sticky
+     * event of an event's type is kept in memory for future access. This can be {@link
+     * #registerSticky(Object)} or
      * {@link #getStickyEvent(Class)}.
      */
     public void postSticky(Object event) {
@@ -456,7 +475,10 @@ public class EventBus {
         }
     }
 
-    /** Looks up all Class objects including super classes and interfaces. Should also work for interfaces. */
+    /**
+     * Looks up all Class objects including super classes and interfaces. Should also work for
+     * interfaces.
+     */
     private List<Class<?>> lookupAllEventTypes(Class<?> eventClass) {
         synchronized (eventTypesCache) {
             List<Class<?>> eventTypes = eventTypesCache.get(eventClass);
@@ -485,9 +507,12 @@ public class EventBus {
     }
 
     /**
-     * Invokes the subscriber if the subscriptions is still active. Skipping subscriptions prevents race conditions
-     * between {@link #unregister(Object)} and event delivery. Otherwise the event might be delivered after the
-     * subscriber unregistered. This is particularly important for main thread delivery and registrations bound to the
+     * Invokes the subscriber if the subscriptions is still active. Skipping subscriptions prevents
+     * race conditions
+     * between {@link #unregister(Object)} and event delivery. Otherwise the event might be
+     * delivered after the
+     * subscriber unregistered. This is particularly important for main thread delivery and
+     * registrations bound to the
      * live cycle of an Activity or Fragment.
      */
     void invokeSubscriber(PendingPost pendingPost) {

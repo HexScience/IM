@@ -3,7 +3,6 @@ package com.vivavideo.imkit;
 import com.vivavideo.imkit.database.DBManager;
 import com.vivavideo.imkit.database.UserInfos;
 import com.vivavideo.imkit.database.UserInfosDao;
-import com.vivavideo.imkit.model.GroupUserInfo;
 import com.vivavideo.imkit.utils.Constants;
 
 import android.content.Context;
@@ -28,7 +27,6 @@ public class DemoContext {
     public Context mContext;
     private DemoApi mDemoApi;
     private HashMap<String, Group> groupMap;
-    private HashMap<String, GroupUserInfo> groupUserInfoMap;
     private SharedPreferences mPreferences;
     private RongIM.LocationProvider.LocationCallback mLastLocationCallback;
     private UserInfosDao mUserInfoDao;
@@ -317,46 +315,9 @@ public class DemoContext {
             return null;
     }
 
-    /**
-     * 通过群组 Id 修改自己所在的这个群组的群昵称。
-     *
-     * @param groupId
-     * @return
-     */
-    public GroupUserInfo setGroupUserinfoByGroupId(String groupId, String nickName) {
-
-        String userId = DemoContext.getInstance().getSharedPreferences().getString(Constants.APP_USER_ID, Constants.DEFAULT);
-
-        GroupUserInfo groupUserInfo = new GroupUserInfo(groupId, userId, nickName);
-
-        return groupUserInfo;
-    }
-
-    /**
-     * 通过群组 Id 修改自己所在的这个群组的群昵称。
-     *
-     * @param groupId
-     * @return
-     */
-    public GroupUserInfo setGroupUserinfoByGroupId(String groupId,String userid, String nickName) {
-
-
-        GroupUserInfo groupUserInfo = new GroupUserInfo(groupId, userid, nickName);
-
-        return groupUserInfo;
-    }
 
     public SharedPreferences getSharedPreferences() {
         return mPreferences;
-    }
-
-
-    public HashMap<String, GroupUserInfo> getGroupUserInfoMap() {
-        return groupUserInfoMap;
-    }
-
-    public void setGroupUserInfoMap(HashMap<String, GroupUserInfo> groupUserInfoMap) {
-        this.groupUserInfoMap = groupUserInfoMap;
     }
 
     public void setGroupMap(HashMap<String, Group> groupMap) {

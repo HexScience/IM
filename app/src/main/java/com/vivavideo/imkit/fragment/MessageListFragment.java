@@ -9,7 +9,6 @@ import com.vivavideo.imkit.RongIM;
 import com.vivavideo.imkit.adapter.MessageListAdapter;
 import com.vivavideo.imkit.model.EmojiMessageAdapter;
 import com.vivavideo.imkit.model.Event;
-import com.vivavideo.imkit.model.GroupUserInfo;
 import com.vivavideo.imkit.model.UIMessage;
 
 import android.content.res.Resources;
@@ -780,25 +779,6 @@ public class MessageListFragment extends UriFragment implements AbsListView.OnSc
                 mAdapter.getItem(position).setSentTime(message.getSentTime());
                 mAdapter.getItem(position).setUId(message.getUId());
                 getHandler().obtainMessage(REFRESH_ITEM, position).sendToTarget();
-            }
-        }
-    }
-
-    public void onEventMainThread(Event.GroupUserInfoEvent event) {
-        GroupUserInfo userInfo = event.getUserInfo();
-        if (userInfo == null || userInfo.getNickname() == null)
-            return;
-
-        if (mList != null && isResumed()) {
-            int first = mList.getFirstVisiblePosition() - mList.getHeaderViewsCount();
-            int last = mList.getLastVisiblePosition() - mList.getHeaderViewsCount();
-            int index = first - 1;
-
-            while (++index <= last && index >= 0 && index < mAdapter.getCount()) {
-                io.rong.imlib.model.Message message = mAdapter.getItem(index);
-                if (message != null && (TextUtils.isEmpty(message.getSenderUserId()) || userInfo.getUserId().equals(message.getSenderUserId()))) {
-                    mAdapter.getView(index, mList.getChildAt(index - mList.getFirstVisiblePosition() + mList.getHeaderViewsCount()), mList);
-                }
             }
         }
     }

@@ -8,7 +8,6 @@ import com.vivavideo.imkit.imageloader.core.listener.ImageLoadingProgressListene
 import com.vivavideo.imkit.model.ConversationKey;
 import com.vivavideo.imkit.model.ConversationTypeFilter;
 import com.vivavideo.imkit.model.Event;
-import com.vivavideo.imkit.model.GroupUserInfo;
 import com.vivavideo.imkit.model.UIConversation;
 import com.vivavideo.imkit.notification.MessageCounter;
 import com.vivavideo.imkit.notification.MessageNotificationManager;
@@ -863,58 +862,6 @@ public class RongIM {
     }
 
     /**
-     * <p>设置GroupUserInfo提供者，供RongIM 调用获取GroupUserInfo</p>
-     * <p>可以使用此方法，修改群组中用户昵称</p>
-     * <p>设置后，当 sdk 界面展示用户信息时，会回调 GroupUserInfoProvider#getGroupUserInfo(String, String)}
-     * 使用者只需要根据对应的 groupId, userId 提供对应的用户信息 {@link GroupUserInfo}。
-     * 如果需要异步从服务器获取用户信息，使用者可以在此方法中发起异步请求，只需要返回 null 信息。
-     * 在异步请求结果返回后，根据返回的结果调用 {@link #refreshGroupUserInfoCache(GroupUserInfo)} 刷新信息。</p>
-     *
-     * @param userInfoProvider 群组用户信息提供者。
-     * @param isCacheUserInfo  设置是否由 IMKit 来缓存 GroupUserInfo。<br>
-     *                         如果 App 提供的 GroupUserInfoProvider。
-     *                         每次都需要通过网络请求数据，而不是将数据缓存到本地，会影响信息的加载速度；<br>
-     *                         此时最好将本参数设置为 true，由 IMKit 来缓存信息。
-     */
-    public static void setGroupUserInfoProvider(GroupUserInfoProvider userInfoProvider, boolean isCacheUserInfo) {
-        if (mCurrentProcessName != null && !mCurrentProcessName.equals(mContext.getPackageName())) {
-            RLog.e(TAG, "RONG_SDK Rong SDK should not be initialized at subprocess");
-            return;
-        }
-
-        if (RongContext.getInstance() == null)
-            throw new ExceptionInInitializerError("RongCloud SDK not init");
-
-        RongContext.getInstance().setGroupUserInfoProvider(userInfoProvider, isCacheUserInfo);
-    }
-
-    /**
-     * <p>设置群组信息的提供者。</p>
-     * <p>设置后，当 sdk 界面展示群组信息时，会回调 {@link (String)}io.rong.imkit.RongIM.GroupInfoProvider#getGroupInfo
-     * 使用者只需要根据对应的 groupId 提供对应的群组信息。
-     * 如果需要异步从服务器获取用户信息，使用者可以在此方法中发起异步请求，只需要返回 null 信息。
-     * 在异步请求结果返回后，根据返回的结果调用 {@link #refreshGroupInfoCache(Group)} 刷新信息。</p>
-     *
-     * @param groupInfoProvider 群组信息提供者。
-     * @param isCacheGroupInfo  设置是否由 IMKit 来缓存用户信息。<br>
-     *                          如果 App 提供的 GroupInfoProvider。
-     *                          每次都需要通过网络请求群组数据，而不是将群组数据缓存到本地，会影响群组信息的加载速度；<br>
-     *                          此时最好将本参数设置为 true，由 IMKit 来缓存群组信息。
-     */
-    public static void setGroupInfoProvider(GroupInfoProvider groupInfoProvider, boolean isCacheGroupInfo) {
-
-        if (mCurrentProcessName != null && !mCurrentProcessName.equals(mContext.getPackageName())) {
-            RLog.e(TAG, "RONG_SDK Rong SDK should not be initialized at subprocess");
-            return;
-        }
-
-        if (RongContext.getInstance() == null)
-            throw new ExceptionInInitializerError("RongCloud SDK not init");
-
-        RongContext.getInstance().setGetGroupInfoProvider(groupInfoProvider, isCacheGroupInfo);
-    }
-
-    /**
      * 刷新讨论组缓存数据，可用于讨论组修改名称后刷新讨论组内其他人员的缓存数据。
      *
      * @param discussion 需要更新的讨论组缓存数据。
@@ -938,31 +885,6 @@ public class RongIM {
             return;
 
         RongUserInfoManager.getInstance().setUserInfo(userInfo);
-    }
-
-    /**
-     * 刷新、更改群组用户缓存数据。
-     *
-     * @param groupUserInfo 需要更新的群组用户缓存数据。
-     */
-    public void refreshGroupUserInfoCache(GroupUserInfo groupUserInfo) {
-
-        if (groupUserInfo == null)
-            return;
-
-        RongUserInfoManager.getInstance().setGroupUserInfo(groupUserInfo);
-    }
-
-    /**
-     * 刷新群组缓存数据。
-     *
-     * @param group 需要更新的群组缓存数据。
-     */
-    public void refreshGroupInfoCache(Group group) {
-        if (group == null)
-            return;
-
-        RongUserInfoManager.getInstance().setGroupInfo(group);
     }
 
     /**
@@ -1098,36 +1020,6 @@ public class RongIM {
          * @return 用户信息。
          */
         public UserInfo getUserInfo(String userId);
-    }
-
-    /**
-     * GroupUserInfo提供者。
-     */
-    public static interface GroupUserInfoProvider {
-        /**
-         * 获取GroupUserInfo。
-         *
-         * @param groupId 群组id。
-         * @param userId  用户id。
-         * @return GroupUserInfo。
-         */
-        public GroupUserInfo getGroupUserInfo(String groupId, String userId);
-    }
-
-
-    /**
-     * 群组信息的提供者。
-     * <p/>
-     * RongIM 本身不保存群组信息，如果在聊天中需要使用群组信息，RongIM 将调用此 Provider 获取群组信息。
-     */
-    public static interface GroupInfoProvider {
-        /**
-         * 获取群组信息。
-         *
-         * @param groupId 群组 Id.
-         * @return 群组信息。
-         */
-        public Group getGroupInfo(String groupId);
     }
 
     /**

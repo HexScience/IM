@@ -16,7 +16,6 @@ import com.vivavideo.imkit.model.ConversationInfo;
 import com.vivavideo.imkit.model.ConversationKey;
 import com.vivavideo.imkit.model.ConversationProviderTag;
 import com.vivavideo.imkit.model.Event;
-import com.vivavideo.imkit.model.GroupUserInfo;
 import com.vivavideo.imkit.model.ProviderTag;
 import com.vivavideo.imkit.notification.MessageCounter;
 import com.vivavideo.imkit.notification.MessageSounder;
@@ -54,8 +53,6 @@ import java.util.concurrent.Executors;
 import io.rong.common.RLog;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Discussion;
-import io.rong.imlib.model.Group;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.PublicServiceProfile;
 import io.rong.imlib.model.UserInfo;
@@ -78,8 +75,6 @@ public class RongContext extends ContextWrapper {
     private static RongIM.RequestPermissionsListener mRequestPermissionsListener; //Android 6.0以上系统时，请求权限监听器
 
     private RongIM.UserInfoProvider mUserInfoProvider;
-    private RongIM.GroupInfoProvider mGroupProvider;
-    private RongIM.GroupUserInfoProvider mGroupUserInfoProvider;
 
     private Map<Class<? extends MessageContent>, IContainerItemProvider.MessageProvider> mTemplateMap;
     private IContainerItemProvider.MessageProvider mDefaultTemplate;
@@ -427,22 +422,6 @@ public class RongContext extends ContextWrapper {
         }
     }
 
-    public Group getGroupInfoFromCache(String groupId) {
-        if (groupId != null) {
-            return RongUserInfoManager.getInstance().getGroupInfo(groupId);
-        } else {
-            return null;
-        }
-    }
-
-    public GroupUserInfo getGroupUserInfoFromCache(String groupId, String userId) {
-        return RongUserInfoManager.getInstance().getGroupUserInfo(groupId, userId);
-    }
-
-    public Discussion getDiscussionInfoFromCache(String discussionId) {
-        return RongUserInfoManager.getInstance().getDiscussionInfo(discussionId);
-    }
-
     public PublicServiceProfile getPublicServiceInfoFromCache(String messageKey) {
         String id = StringUtils.getArg1(messageKey);
         String arg2 = StringUtils.getArg2(messageKey);
@@ -492,32 +471,13 @@ public class RongContext extends ContextWrapper {
         return mMemberSelectListener;
     }
 
-
-    public void setGetUserInfoProvider(RongIM.UserInfoProvider provider, boolean isCache) {
-        this.mUserInfoProvider = provider;
-        RongUserInfoManager.getInstance().setIsCacheUserInfo(isCache);
-    }
-
-    void setGetGroupInfoProvider(RongIM.GroupInfoProvider provider, boolean isCacheGroupInfo) {
-        this.mGroupProvider = provider;
-        RongUserInfoManager.getInstance().setIsCacheGroupInfo(isCacheGroupInfo);
-    }
-
     public RongIM.UserInfoProvider getUserInfoProvider() {
         return mUserInfoProvider;
     }
 
-    public RongIM.GroupInfoProvider getGroupInfoProvider() {
-        return mGroupProvider;
-    }
-
-    public void setGroupUserInfoProvider(RongIM.GroupUserInfoProvider groupUserInfoProvider, boolean isCache) {
-        this.mGroupUserInfoProvider = groupUserInfoProvider;
-        RongUserInfoManager.getInstance().setIsCacheGroupUserInfo(isCache);
-    }
-
-    public RongIM.GroupUserInfoProvider getGroupUserInfoProvider() {
-        return mGroupUserInfoProvider;
+    public void setGetUserInfoProvider(RongIM.UserInfoProvider provider, boolean isCache) {
+        this.mUserInfoProvider = provider;
+        RongUserInfoManager.getInstance().setIsCacheUserInfo(isCache);
     }
 
     public void addInputExtentionProvider(Conversation.ConversationType conversationType, InputProvider.ExtendProvider[] providers) {

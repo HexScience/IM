@@ -15,11 +15,9 @@
  */
 package com.vivavideo.imkit.eventbus;
 
-import com.vivavideo.imkit.eventbus.EventBus;
-
 /**
  * This Event is posted by EventBus when no subscriber is found for a posted event.
- * 
+ *
  * @author Markus
  */
 public final class NoSubscriberEvent {
