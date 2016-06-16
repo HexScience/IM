@@ -13,7 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.eventbus;
+
+import com.vivavideo.imkit.eventbus.EventBus;
+import com.vivavideo.imkit.eventbus.EventBusException;
+import com.vivavideo.imkit.eventbus.SubscriberMethod;
+import com.vivavideo.imkit.eventbus.ThreadMode;
 
 import android.util.Log;
 

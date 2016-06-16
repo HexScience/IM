@@ -1,4 +1,4 @@
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.widget;
 
 import com.vivavideo.imkit.R;
 import com.vivavideo.imkit.adapter.EmojiAdapter;

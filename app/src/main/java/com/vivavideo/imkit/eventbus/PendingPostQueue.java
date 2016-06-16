@@ -1,4 +1,4 @@
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.eventbus;
 
 final class PendingPostQueue {
     private PendingPost head;

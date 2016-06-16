@@ -1,4 +1,4 @@
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.activity;
 
 
 import com.sea_monster.exception.BaseException;

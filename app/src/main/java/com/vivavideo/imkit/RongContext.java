@@ -1,9 +1,9 @@
 package com.vivavideo.imkit;
 
-import com.vivavideo.imkit.R;
 import com.vivavideo.imkit.cache.RongCache;
 import com.vivavideo.imkit.cache.RongCacheWrap;
 import com.vivavideo.imkit.common.RongConst;
+import com.vivavideo.imkit.eventbus.EventBus;
 import com.vivavideo.imkit.imageloader.cache.disc.impl.ext.LruDiskCache;
 import com.vivavideo.imkit.imageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.vivavideo.imkit.imageloader.cache.memory.impl.LruMemoryCache;

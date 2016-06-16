@@ -423,9 +423,6 @@ private static String HOST = "http://webim.demo.rong.io/";
         }
     };
 
-
-
-
     public void getUserInfo(final String userId, final GetUserInfoListener listener) {
 
         if (userId == null || listener == null || DemoContext.getInstance() == null)

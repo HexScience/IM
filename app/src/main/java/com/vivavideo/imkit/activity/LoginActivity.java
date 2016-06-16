@@ -2,9 +2,7 @@ package com.vivavideo.imkit.activity;
 
 import com.sea_monster.exception.BaseException;
 import com.sea_monster.network.AbstractHttpRequest;
-import com.vivavideo.imkit.BaseApiActivity;
 import com.vivavideo.imkit.DemoContext;
-import com.vivavideo.imkit.MainActivity;
 import com.vivavideo.imkit.R;
 import com.vivavideo.imkit.RongIM;
 import com.vivavideo.imkit.database.UserInfos;

@@ -103,7 +103,7 @@
                 android:src="@drawable/rc_read_receipt"
                 android:visibility="gone" />
 
-            <com.vivavideo.imkit.ProviderContainerView
+            <com.vivavideo.imkit.widget.ProviderContainerView
                 android:id="@+id/rc_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

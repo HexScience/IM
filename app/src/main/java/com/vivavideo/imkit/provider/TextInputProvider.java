@@ -1,9 +1,9 @@
 package com.vivavideo.imkit.provider;
 
-import com.vivavideo.imkit.InputView;
+import com.vivavideo.imkit.widget.InputView;
 import com.vivavideo.imkit.R;
 import com.vivavideo.imkit.RongContext;
-import com.vivavideo.imkit.RongEmojiPager;
+import com.vivavideo.imkit.widget.RongEmojiPager;
 import com.vivavideo.imkit.fragment.MessageInputFragment;
 import com.vivavideo.imkit.model.Draft;
 import com.vivavideo.imkit.utils.AndroidEmoji;

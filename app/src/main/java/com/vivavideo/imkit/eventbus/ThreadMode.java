@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.eventbus;
+
+import com.vivavideo.imkit.eventbus.EventBus;
 
 /**
  * Each event handler method has a thread mode, which determines in which thread the method is to be called by EventBus.

@@ -1,6 +1,7 @@
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.activity;
 
 import com.vivavideo.imkit.R;
+import com.vivavideo.imkit.RongIM;
 
 import android.app.Activity;
 import android.os.Bundle;

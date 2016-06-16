@@ -1,7 +1,7 @@
 package com.vivavideo.imkit.fragment;
 
 
-import com.vivavideo.imkit.InputView;
+import com.vivavideo.imkit.widget.InputView;
 import com.vivavideo.imkit.R;
 import com.vivavideo.imkit.RongContext;
 import com.vivavideo.imkit.RongIM;

@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.eventbus;
+
+import com.vivavideo.imkit.Subscription;
 
 import java.util.ArrayList;
 import java.util.List;

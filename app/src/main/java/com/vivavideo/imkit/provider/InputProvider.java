@@ -1,6 +1,6 @@
 package com.vivavideo.imkit.provider;
 
-import com.vivavideo.imkit.InputView;
+import com.vivavideo.imkit.widget.InputView;
 import com.vivavideo.imkit.RongContext;
 import com.vivavideo.imkit.RongIM;
 import com.vivavideo.imkit.fragment.MessageInputFragment;

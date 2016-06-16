@@ -1,6 +1,7 @@
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.widget;
 
 import com.vivavideo.imkit.R;
+import com.vivavideo.imkit.RongContext;
 import com.vivavideo.imkit.provider.InputProvider;
 import com.vivavideo.imkit.provider.VoiceInputProvider;
 import com.vivavideo.imkit.widget.RongPluginPager;

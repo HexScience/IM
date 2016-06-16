@@ -1,5 +1,6 @@
 package com.vivavideo.imkit;
 
+import com.vivavideo.imkit.eventbus.EventBus;
 import com.vivavideo.imkit.imageloader.core.ImageLoader;
 import com.vivavideo.imkit.imageloader.core.assist.FailReason;
 import com.vivavideo.imkit.imageloader.core.listener.ImageLoadingListener;

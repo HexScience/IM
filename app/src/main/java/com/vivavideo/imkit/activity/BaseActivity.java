@@ -1,4 +1,4 @@
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.activity;
 
 import android.media.AudioManager;
 import android.os.Bundle;

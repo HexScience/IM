@@ -13,7 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.eventbus;
+
+import com.vivavideo.imkit.PendingPost;
+import com.vivavideo.imkit.PendingPostQueue;
+import com.vivavideo.imkit.Subscription;
+import com.vivavideo.imkit.eventbus.EventBus;
+import com.vivavideo.imkit.eventbus.EventBusException;
 
 import android.os.Handler;
 import android.os.Looper;

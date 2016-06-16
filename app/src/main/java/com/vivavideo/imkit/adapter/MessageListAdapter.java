@@ -1,7 +1,7 @@
 package com.vivavideo.imkit.adapter;
 
-import com.vivavideo.imkit.EventBus;
-import com.vivavideo.imkit.ProviderContainerView;
+import com.vivavideo.imkit.eventbus.EventBus;
+import com.vivavideo.imkit.widget.ProviderContainerView;
 import com.vivavideo.imkit.R;
 import com.vivavideo.imkit.RongContext;
 import com.vivavideo.imkit.model.ConversationKey;

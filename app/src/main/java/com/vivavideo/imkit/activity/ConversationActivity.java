@@ -1,9 +1,14 @@
-package com.vivavideo.imkit;
+package com.vivavideo.imkit.activity;
 
 import com.sea_monster.exception.BaseException;
 import com.sea_monster.network.AbstractHttpRequest;
+import com.vivavideo.imkit.DemoApi;
+import com.vivavideo.imkit.DemoContext;
+import com.vivavideo.imkit.eventbus.EventBus;
+import com.vivavideo.imkit.widget.InputView;
 import com.vivavideo.imkit.R;
-import com.vivavideo.imkit.activity.LoginActivity;
+import com.vivavideo.imkit.RongContext;
+import com.vivavideo.imkit.RongIM;
 import com.vivavideo.imkit.database.UserInfos;
 import com.vivavideo.imkit.fragment.ConversationFragment;
 import com.vivavideo.imkit.fragment.UriFragment;
