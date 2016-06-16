@@ -6,14 +6,14 @@
 
     <fragment
         android:id="@android:id/toggle"
-        android:name="com.vivavideo.myapplication.fragment.MessageInputFragment"
+        android:name="com.vivavideo.imkit.fragment.MessageInputFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
 
     <fragment
         android:id="@android:id/list"
-        android:name="com.vivavideo.myapplication.fragment.MessageListFragment"
+        android:name="com.vivavideo.imkit.fragment.MessageListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@android:id/toggle" />

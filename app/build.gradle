@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.vivavideo.myapplication"
+        applicationId "com.vivavideo.imkit"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

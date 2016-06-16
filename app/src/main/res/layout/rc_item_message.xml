@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp" />
 
-    <com.vivavideo.myapplication.widget.AsyncImageView
+    <com.vivavideo.imkit.widget.AsyncImageView
         android:id="@+id/rc_left"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -27,7 +27,7 @@
         app:RCCornerRadius="3dp"
         app:RCDefDrawable="@drawable/rc_ic_def_msg_portrait" />
 
-    <com.vivavideo.myapplication.widget.AsyncImageView
+    <com.vivavideo.imkit.widget.AsyncImageView
         android:id="@+id/rc_right"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -103,7 +103,7 @@
                 android:src="@drawable/rc_read_receipt"
                 android:visibility="gone" />
 
-            <com.vivavideo.myapplication.ProviderContainerView
+            <com.vivavideo.imkit.ProviderContainerView
                 android:id="@+id/rc_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
