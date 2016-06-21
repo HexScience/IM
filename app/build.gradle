@@ -13,7 +13,10 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            // 是否进行混淆
+            minifyEnabled true
+            // 删除没有使用到的资源
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

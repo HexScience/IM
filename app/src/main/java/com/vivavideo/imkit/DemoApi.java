@@ -13,7 +13,6 @@ import com.vivavideo.imkit.model.Status;
 import com.vivavideo.imkit.model.User;
 import com.vivavideo.imkit.parser.GsonParser;
 
-
 import org.apache.http.HttpRequest;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -40,8 +39,8 @@ import io.rong.imlib.model.UserInfo;
  * BaseApi 为 SDK 源码内的代码，此处只是一个演示的过程。
  */
 public class DemoApi extends BaseApi {
-//    private static String HOST = "http://webim.demo.rong.io/"; //webim.demo.rong.io
-private static String HOST = "http://webim.demo.rong.io/";
+    //    private static String HOST = "http://webim.demo.rong.io/"; //webim.demo.rong.io
+    private static String HOST = "http://webim.demo.rong.io/";
     private final static String DEMO_LOGIN_EMAIL = "email_login";
     private final static String DEMO_LOGIN_EMAIL_TOKEN = "email_login_token";
     private final static String DEMO_REQ = "reg";
@@ -77,10 +76,7 @@ private static String HOST = "http://webim.demo.rong.io/";
     /**
      * 登录 demo server
      *
-     * @param email
-     * @param password
      * @param callback 1 关羽  2，张飞
-     * @return
      */
     public AbstractHttpRequest<User> loginToken(String email, String password, ApiCallback<User> callback) {
 
@@ -98,15 +94,9 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * 登录 demo server
-     *
-     * @param email
-     * @param password
-     * @param callback
-     * @return
      */
     @Deprecated
     public AbstractHttpRequest<User> login(String email, String password, ApiCallback<User> callback) {
-
 
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         nameValuePairs.add(new BasicNameValuePair("email", email));
@@ -121,9 +111,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * 登陆成功后获得token
-     *
-     * @param callback
-     * @return
      */
     @Deprecated
     public AbstractHttpRequest<User> getToken(ApiCallback<User> callback) {
@@ -137,12 +124,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * demo server 注册新用户
-     *
-     * @param email
-     * @param username
-     * @param password
-     * @param callback
-     * @return
      */
     public AbstractHttpRequest<Status> register(String email, String username, String mobile, String password, ApiCallback<Status> callback) {
 
@@ -163,10 +144,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * demo server 注册新用户
-     *
-     * @param username
-     * @param callback
-     * @return
      */
     public AbstractHttpRequest<Status> updateProfile(String username, ApiCallback<Status> callback) {
 
@@ -185,9 +162,6 @@ private static String HOST = "http://webim.demo.rong.io/";
     /**
      * demo server 获取好友
      * 获取所有好友信息
-     *
-     * @param callback
-     * @return
      */
 
     public AbstractHttpRequest<Friends> getFriends(ApiCallback<Friends> callback) {
@@ -202,9 +176,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * demo server 加入群组
-     *
-     * @param callback
-     * @return
      */
 
     public AbstractHttpRequest<Status> joinGroup(String username, ApiCallback<Status> callback) {
@@ -222,9 +193,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * demo server 退出群组
-     *
-     * @param callback
-     * @return
      */
 
     public AbstractHttpRequest<Status> quitGroup(String username, ApiCallback<Status> callback) {
@@ -243,9 +211,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * 通过用户名搜索用户
-     *
-     * @param callback
-     * @return
      */
     public AbstractHttpRequest<Friends> searchUserByUserName(String username, ApiCallback<Friends> callback) {
 
@@ -263,9 +228,6 @@ private static String HOST = "http://webim.demo.rong.io/";
     /**
      * 获取好友列表
      * 获取添加过的好友信息
-     *
-     * @param callback
-     * @return
      */
 
     public AbstractHttpRequest<Friends> getNewFriendlist(ApiCallback<Friends> callback) {
@@ -281,9 +243,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * 发好友邀请
-     *
-     * @param callback
-     * @return
      */
 
     public AbstractHttpRequest<User> sendFriendInvite(String userid, String message, ApiCallback<User> callback) {
@@ -302,9 +261,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * demo server 删除好友
-     *
-     * @param callback
-     * @return
      */
 
     public AbstractHttpRequest<Status> deletefriends(String id, ApiCallback<Status> callback) {
@@ -322,9 +278,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * demo server 处理好友请求好友
-     *
-     * @param callback
-     * @return
      */
 
     public AbstractHttpRequest<Status> processRequestFriend(String id, String isaccess, ApiCallback<Status> callback) {
@@ -343,9 +296,6 @@ private static String HOST = "http://webim.demo.rong.io/";
 
     /**
      * 根据userid 获得 userinfo
-     *
-     * @param callback
-     * @return
      */
 
     public AbstractHttpRequest<User> getUserInfoByUserId(String userid, ApiCallback<User> callback) {
