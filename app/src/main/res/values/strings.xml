@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">小影融云IM测试</string>
+    <string name="main_name">小影</string>
+    <string name="de_actionbar_system">"系统消息"</string>
+    <string name="main_customer">客服</string>
+    <string name="de_actionbar_sub_defult">"聊天"</string>
+
+    <string name="rc_message_content_draft">[草稿]</string>
+    <string name="rc_conversation_list_my_private_conversation">我的私人会话</string>
+
+    <string name="rc_dialog_item_message_delete">删除消息</string>
+    <string name="rc_dialog_item_message_copy">复制消息</string>
+
+    <string name="rc_plugins_location">位置</string>
+    <string name="rc_plugins_image">图片</string>
+    <string name="rc_plugins_camera">相机</string>
+
+    <string name="rc_voice_rec">手指上滑，取消发送</string>
+    <string name="rc_voice_cancel">松开手指，取消发送</string>
+    <string name="rc_voice_short">录音时间太短</string>
+    <string name="rc_voice_failure">录音失败！</string>
+    <string name="rc_input_voice">按住 说话</string>
+
+    <string name="rc_join_chatroom_failure">加入聊天室失败</string>
+    <string name="rc_cs_evaluate_robot">机器人是否解决了您的问题</string>
+
+    <string name="rc_cs_submit">提交</string>
+    <string name="rc_cs_cancel">取消</string>
+
+    <string name="rc_cs_evaluate_human">请对本次服务做出评价</string>
+
+    <string name="rc_yesterday_format">昨天 %1$s</string>
+    <string name="rc_input_send">发送</string>
+
+    <!-- PictureSelectorActivity -->
+    <string name="rc_picsel_toolbar">图片</string>
+    <string name="rc_picsel_toolbar_send">发送</string>
+    <string name="rc_picsel_toolbar_send_num">发送(%d/9)</string>
+    <string name="rc_picsel_pictype">图片</string>
+    <string name="rc_picsel_toolbar_preview">预览</string>
+    <string name="rc_picsel_toolbar_preview_num">预览(%d)</string>
+    <string name="rc_picsel_selected_max">您最多只能选择9张图片</string>
+    <string name="rc_picsel_take_picture">拍摄照片</string>
+    <string name="rc_picsel_catalog_allpic">所有图片</string>
+    <string name="rc_picsel_catalog_number">%d张</string>
+
+    <!-- PicturePreviewActivity -->
+    <string name="rc_picprev_origin">原图</string>
+    <string name="rc_picprev_origin_size">原图(%s)</string>
+    <string name="rc_picprev_select">选择</string>
+
+
+</resources>
