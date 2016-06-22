@@ -3,6 +3,7 @@ package com.vivavideo.imkit.provider;
 import com.vivavideo.imkit.R;
 import com.vivavideo.imkit.RongContext;
 import com.vivavideo.imkit.SendImageManager;
+import com.vivavideo.imkit.photoview.activity.PictureSelectorActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,7 +37,7 @@ public class ImageInputProvider extends InputProvider.ExtendProvider {
     public void onPluginClick(View view) {
         Intent intent = new Intent();
         //TODO
-//        intent.setClass(view.getContext(), PictureSelectorActivity.class);
+        intent.setClass(view.getContext(), PictureSelectorActivity.class);
         startActivityForResult(intent, 23);
     }
 
